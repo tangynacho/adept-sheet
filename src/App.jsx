@@ -120,8 +120,42 @@ function App() {
     'Brain Storm': { cost: 2, description: '???' }
   }
   
-  const availableSpells = ['Fireball', 'Healing Word', 'Lightning Bolt', 'Entangle']
-  const preparedSpells = Math.floor(level / 2) + 1
+  const adeptClassSpellList = {
+    Guardian: [
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', ''],
+    ],
+    Berserker: [
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', ''],
+    ],
+    Luminier: [
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', ''],
+    ],
+  };
+  const getPreparedSpellsByLevel = (level) => {
+    if (level >= 17) return [2,2,2,2,2]
+    if (level >= 15) return [2,2,2,2,1]
+    if (level >= 13) return [2,2,2,2,0]
+    if (level >= 11) return [2,2,2,1,0]
+    if (level >= 10) return [2,2,2,0,0]
+    if (level >= 8) return [2,2,1,0,0]
+    if (level >= 6) return [2,2,0,0,0]
+    if (level >= 4) return [2,1,0,0,0]
+    if (level >= 2) return [2,0,0,0,0]
+    return [1,0,0,0,0]
+  }
+  const preparedSpells = getPreparedSpellsByLevel(level)
 
   const dualClassMap = {
     'Mercury|Venus': 'Guardian',
@@ -274,7 +308,9 @@ function App() {
         <section className="section">
           <h2>Psynergy</h2>
           <p><strong>Psynergy Points:</strong> {pp}</p>
-          <p><strong>Psynergy You Can Prepare:</strong> {preparedSpells}</p>
+          {/* <p><strong>Psynergy You Can Prepare:</strong> {preparedSpells.map((el, i) => (
+            <span>{el} Tier {i+1}{i < preparedSpells.length - 1 ? ', ' : ''}</span>
+          ))}</p> */}
 
           <h3>Base Psynergy</h3>
           <ul>
@@ -285,14 +321,28 @@ function App() {
 
           <h3>Prepared {adeptClass} Psynergy</h3>
 
-          {[...Array(preparedSpells)].map((_, i) => (
-            <select key={i} defaultValue="">
-              <option value="" disabled>Select a spell</option>
-              {availableSpells.map(spell => (
-                <option key={spell} value={spell}>{spell}</option>
-              ))}
-            </select>
-          ))}
+          <div style={{ display: 'flex', width: '100%' }}>
+            {preparedSpells.map((count, tierIndex) => (
+              <div
+                key={tierIndex}
+                style={{ flex: 1, padding: '0 0.5rem', boxSizing: 'border-box' }}
+              >
+                <h4 style={{ textAlign: 'center' }}>Tier {tierIndex + 1}</h4>
+                {count > 0 ? (
+                  [...Array(count)].map((_, i) => (
+                    <select key={i} defaultValue="" style={{ width: '100%', marginBottom: '0.5rem' }}>
+                      <option value="" disabled>Select a spell</option>
+                      {adeptClassSpellList[adeptClass]?.[tierIndex]?.map((spell, j) => (
+                        <option key={j} value={spell}>{spell}</option>
+                      ))}
+                    </select>
+                  ))
+                ) : (
+                  <div style={{ height: '2.5rem' }}></div>
+                )}
+              </div>
+            ))}
+          </div>
         </section>
       </div>
     </div>
