@@ -38,7 +38,7 @@ html, body, #root {
   border-radius: 8px;
   background-color: #444444;
   width: 45vw;
-  height: 40vh;
+  height: 100%;
   box-sizing: border-box;
 }
 
@@ -59,4 +59,16 @@ select {
   font-size: 1rem;
   width: 100%;
   max-width: 200px;
+}
+
+.combined-character-section .two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.character-info label,
+.djinn-selectors label {
+  display: block;
+  margin-bottom: 1rem;
 }
