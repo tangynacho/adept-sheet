@@ -72,3 +72,14 @@ select {
   display: block;
   margin-bottom: 1rem;
 }
+
+.three-column-text {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.three-column-text span {
+  flex: 1;
+  text-align: center; /* optional: centers text in each column */
+}
