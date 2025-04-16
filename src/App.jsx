@@ -121,26 +121,75 @@ function App() {
   }
   
   const adeptClassSpellList = {
-    Guardian: [
-      ['', '', ''],
-      ['', '', ''],
-      ['', '', ''],
-      ['', '', ''],
-      ['', '', ''],
+    Paragon: [
+      ['Healing Word', 'Ice Knife', 'Shape Water', 'Shield of Faith', 'Bless'],
+      ['Calm Emotions', 'Lesser Restoration', 'Mass Healing Word', 'Water Breathing', 'Water Walk'],
+      ['Aura of Purity', 'Awaken', 'Cone of Cold', 'Control Water', 'Greater Restoration'],
+      ['Forbiddance', 'Freezing Sphere', 'Heal', "Heroes' Feast"],
+      ['Mass Heal', 'Tsunami'],
     ],
-    Berserker: [
-      ['', '', ''],
-      ['', '', ''],
-      ['', '', ''],
-      ['', '', ''],
-      ['', '', ''],
+    Gallant: [
+      ['Booming Blade', 'Cure Wounds', 'Earth Tremor', 'Mold Earth', 'Sword Burst'],
+      ['Aid', 'Conjure Barrage', 'Elemental Weapon', 'Prayer of Healing', 'Meld into Stone'],
+      ['Aura of Life', 'Conjure Volley', 'Mass Cure Wounds', 'Stone Shape', 'Wall of Stone'],
+      ['Flesh to Stone', 'Move Earth', 'Regenerate', 'Word of Recall'],
+      ['Earthquake', 'Power Word Heal'],
+    ],
+    Warrior: [
+      ['Bane', 'Blade Ward', 'Control Flames', 'Fire Bolt', 'Guiding Bolt'],
+      ['Bestow Curse', 'Blinding Smite', 'Fireball', 'Ray of Enfeeblement', 'Scorching Ray'],
+      ['Contagion', 'Fire Shield', 'Hold Monster', 'Wall of Fire', 'Guardian of Faith'],
+      ['Divine Word', 'Fire Storm', 'Harm', 'Sunbeam'],
+      ['Meteor Swarm', 'Sunburst'],
+    ],
+    Magister: [
+      ['Expeditious Retreat', 'Guidance', 'Gust', 'Mage Armor', 'Shocking Grasp'],
+      ['Blur', 'Dispel Magic', 'Gust of Wind', 'Lightning Arrow', 'Lightning Bolt'],
+      ['Circle of Power', 'Confusion', 'Phantasmal Killer', 'Telepathic Bond', 'Wall of Force'],
+      ['Chain Lightning', 'Sequester', 'Teleport', 'Wind Walk'],
+      ['Feeblemind', 'Mind Blank'],
+    ],
+    Guardian: [
+      ['Ensnaring Strike', 'Entangle', 'Hail of Thorns', 'Magic Stone', 'Shillelagh', 'Thorn Whip'],
+      ['Barkskin', 'Revivify', 'Plant Growth', 'Remove Curse', 'Spike Growth'],
+      ['Commune with Nature', 'Gaint Insect', 'Grasping Vine', 'Stoneskin', 'Tree Stride'],
+      ['Globe of Invulnerability', 'Transport via Plants', 'Wall of Thorns'],
+      ['Antimagic Field', 'Shapechange'],
     ],
     Luminier: [
-      ['', '', ''],
-      ['', '', ''],
-      ['', '', ''],
-      ['', '', ''],
-      ['', '', ''],
+      ['Acid Splash', 'Animal Friendship', 'Dancing Lights', 'Fog Cloud', 'Posion Spray', 'Shield'],
+      ['Acid Arrow', 'Beacon of Hope', 'Branding Smite', 'Misty Step', 'Moonbeam'],
+      ['Arcane Eye', 'Cloudkill', 'Freedom of Movement', 'Fount of Moonlight', 'Resilient Sphere'],
+      ['Arcane Gate', 'Disintegrate', 'Prismatic Spray'],
+      ['Holy Aura', 'Prismatic Wall'],
+    ],
+    Oracle: [
+      ['Armor of Agathys', 'Frostbite', 'Ray of Frost', 'Lightning Lure', 'Thunderclap', 'Witch Bolt'],
+      ['Call Lightning', 'Darkness', 'Mirror Image', 'Sleet Storm', 'Wind Wall'],
+      ['Conjure Elemental', 'Divination', 'Ice Storm', 'Insect Plague', 'Storm of Radiance'],
+      ['Reverse Gravity', 'True Seeing', 'Wall of Ice'],
+      ['Control Weather', 'Storm of Vengeance'],
+    ],
+    Berserker: [
+      ['Burning Hands', 'Create Bonfire', 'Hellish Rebuke', 'Sacred Flame', 'Thunderwave', 'Thunderous Smite'],
+      ['Cloud of Daggers', 'Flame Blade', 'Shatter', 'Flaming Sphere', "Crusader's Mantle"],
+      ['Banishing Smite', 'Destructive Wave', 'Dominate Person', 'Flame Strike', 'Staggering Smite'],
+      ['Blade Barrier', 'Circle of Death', 'Delayed Blast Fireball'],
+      ['Incendiary Cloud', 'Power Word Stun'],
+    ],
+    Conjurer: [
+      ['Arms of Hadar', 'Chill Touch', 'Divine Favor', 'False Life', 'Hex', 'Heroism'],
+      ['Animate Dead', 'Aura of Vitality', 'Speak with Dead', 'Vampiric Touch', 'Warding Bond'],
+      ['Black Tentacles', 'Blight', 'Death Ward', 'Hallow', 'Raise Dead'],
+      ['Create Undead', 'Finger of Death', 'Ressurection'],
+      ['Power Word Kill', 'True Ressurection'],
+    ],
+    Illusionist: [
+      ['Charm Person', 'Color Spray', 'Faerie Fire', 'Magic Missile', 'Mind Sliver', 'Sleep'],
+      ['Blink', 'Counterspell', 'Crown of Madness', 'Phantom Steed', 'Slow'],
+      ['Dimension Door', 'Faithful Hound', 'Geas', 'Modify Memory', 'Polymorph'],
+      ['Eyebite', 'Forcecage', 'Mass Suggestion'],
+      ['True Polymorph', 'Time Stop'],
     ],
   };
   const getPreparedSpellsByLevel = (level) => {
