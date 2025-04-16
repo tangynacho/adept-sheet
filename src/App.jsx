@@ -187,16 +187,28 @@ function App() {
           <div className="two-column">
             <div className="character-info">
             <h2>Character</h2>
-              <label>
-                Level:
-                <input
-                  type="number"
-                  min="1"
-                  max="20"
-                  value={level}
-                  onChange={(e) => setLevel(parseInt(e.target.value))}
-                />
-              </label>
+            <label>
+              Level:
+              <input
+                type="number"
+                min="1"
+                max="20"
+                value={level}
+                onChange={(e) => {
+                  const val = e.target.value
+                  if (val === '') {
+                    setLevel('') // temporarily allow blank
+                  } else {
+                    setLevel(parseInt(val))
+                  }
+                }}
+                onBlur={() => {
+                  if (level === '' || isNaN(level)) {
+                    setLevel(1) // default to 1 when input is left blank
+                  }
+                }}
+              />
+            </label>
               <label>
                 Base Element:
                 <select value={baseElement} onChange={(e) => setBaseElement(e.target.value)}>
@@ -259,7 +271,7 @@ function App() {
           </ul>
 
           <h3>Adept Class</h3>
-          <p><em>Adept Class</em></p>
+          <p><em>{adeptClass} Tier {classTier}</em></p>
 
           <h3>Prepared Psynergy</h3>
           {[...Array(preparedSpells)].map((_, i) => (
