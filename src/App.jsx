@@ -188,7 +188,7 @@ function App() {
             <div className="character-info">
             <h2>Character</h2>
             <label>
-              Level:
+              <h3>Level:</h3>
               <input
                 type="number"
                 min="1"
@@ -197,43 +197,46 @@ function App() {
                 onChange={(e) => {
                   const val = e.target.value
                   if (val === '') {
-                    setLevel('') // temporarily allow blank
+                    setLevel('')
                   } else {
                     setLevel(parseInt(val))
                   }
                 }}
                 onBlur={() => {
                   if (level === '' || isNaN(level)) {
-                    setLevel(1) // default to 1 when input is left blank
+                    setLevel(1)
                   }
                 }}
               />
             </label>
               <label>
-                Base Element:
+              <h3>Base Element:</h3>
                 <select value={baseElement} onChange={(e) => setBaseElement(e.target.value)}>
                   {elements.map(el => (
                     <option key={el} value={el}>{el}</option>
                   ))}
                 </select>
               </label>
-              <div>Devotions:</div>
+              <h3>Devotions:</h3>
               <ul>
                 {Object.entries(devotion).map(([element, count]) => (
                   <li key={element}>{element}: {count}</li>
                 ))}
               </ul>
               
-              <label>
-                Adept Class:
+              <h3>
+              Adept Class:
                 {adeptClasses.length > 1 ? (
+                  <div>
                 <select value={adeptClass} onChange={(e) => setAdeptClass(e.target.value)}>
                   {adeptClasses.map(el => (
                     <option key={el} value={el}>{el}</option>
-                  ))}
+                  ))} 
                 </select>
-                ) : <span> {adeptClass}</span>}
-              </label>
+                Tier {classTier}
+                </div>
+                ) : <span> {adeptClass} Tier {classTier}</span>}
+              </h3>
             </div>
 
             <div className="djinn-selectors">
@@ -266,14 +269,12 @@ function App() {
           <h3>Base Psynergy</h3>
           <ul>
             {basePsynergy.map(spell => (
-              <li key={spell}>{spell}</li>
+              <li key={spell}>{spell} ({psynergyDetails[spell].cost}): {psynergyDetails[spell].description}</li>
             ))}
           </ul>
 
-          <h3>Adept Class</h3>
-          <p><em>{adeptClass} Tier {classTier}</em></p>
+          <h3>Prepared {adeptClass} Psynergy</h3>
 
-          <h3>Prepared Psynergy</h3>
           {[...Array(preparedSpells)].map((_, i) => (
             <select key={i} defaultValue="">
               <option value="" disabled>Select a spell</option>
