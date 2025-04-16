@@ -9,7 +9,6 @@ function App() {
   const [adeptClasses, setAdeptClasses] = useState(['Paragon'])
   const [classTier, setClassTier] = useState(1)
   const [isPortrait, setIsPortrait] = useState(window.matchMedia("(orientation: portrait)").matches)
-  const [basePsynergy, setBasePsynergy] = useState([])
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(orientation: portrait)")
@@ -20,15 +19,17 @@ function App() {
   }, [])
 
   const elements = ['Mercury', 'Venus', 'Mars', 'Jupiter']
-  const placeholderDjinn = ['Mercury Djinn', 'Venus Djinn', 'Mars Djinn', 'Jupiter Djinn']
-  const dualClassMap = {
-    'Mercury|Venus': 'Guardian',
-    'Mars|Mercury': 'Luminier',
-    'Jupiter|Mercury': 'Oracle',
-    'Mars|Venus': 'Berserker',
-    'Jupiter|Venus': 'Conjurer',
-    'Jupiter|Mars': 'Illusionist'
+  const djinnDetails = {
+    // Mercury
+    'Chill': { element: 'Mercury', damage: 'Cold', skill: 'Medicine', bond: '???' },
+    // Venus
+    'Flint': { element: 'Venus', damage: 'Thunder', skill: 'Survival', bond: 'Enemies in a 30ft radius are knocked prone and deafened until the start of your next turn.' },
+    // Mars
+    'Forge': { element: 'Mars', damage: 'Fire', skill: 'Animal Handling', bond: '???' },
+    // Jupiter
+    'Gust': { element: 'Jupiter', damage: 'Force', skill: 'Deception', bond: '???' },
   }
+  const availableDjinn = ['Chill', 'Flint', 'Forge', 'Gust']
 
   const devotion = {
     Mercury: 0,
@@ -40,7 +41,7 @@ function App() {
   devotion[baseElement] += 1
   djinn.forEach(d => {
     if (d) {
-      const element = d.split(' ')[0]
+      const element = djinnDetails[d].element
       devotion[element] += 1
     }
   })
@@ -52,14 +53,8 @@ function App() {
     if (level >= 3) return 5
     return 4
   }
-
-  const getDualClassName = (el1, el2) => {
-    const key = [el1, el2].sort().join('|')
-    return dualClassMap[key] || null
-  }
-
   const pp = calculatePP(level)
-  const preparedSpells = Math.floor(level / 2) + 1
+  
   const basePsynergyMap = {
     Mercury: [
       ['Douse'], ['Douse+','Frost'], ['Douse+','Tundra','Prism'], ['Drench','Tundra','Hail Prism'], ['Drench','Glacier','Freeze Prism']
@@ -74,6 +69,14 @@ function App() {
       ['Mind Read'], ['Mind Read+','Whirlwind'], ['Mind Read+','Tornado','Storm Ray'], ['Mind Link','Tornado','Destruct Ray'], ['Mind Link','Tempest','Brain Storm']
     ]
   }
+  const getBasePsynergy = (element, level) => {
+    return (level >= 14) ? basePsynergyMap[element][4]
+    : (level >= 9) ? basePsynergyMap[element][3]
+    : (level >= 5) ? basePsynergyMap[element][2]
+    : (level >= 3) ? basePsynergyMap[element][1]
+    : basePsynergyMap[element][0]
+  }
+  const basePsynergy = getBasePsynergy(baseElement, level) 
   const psynergyDetails = {
     // Mercury
     'Douse': { cost: 0, description: '' },
@@ -116,15 +119,22 @@ function App() {
     'Tempest': { cost: 1, description: '' },
     'Brain Storm': { cost: 2, description: '' }
   }
-  const getBasePsynergy = (element, level) => {
-    return (level >= 14) ? basePsynergyMap[element][4]
-    : (level >= 9) ? basePsynergyMap[element][3]
-    : (level >= 5) ? basePsynergyMap[element][2]
-    : (level >= 3) ? basePsynergyMap[element][1]
-    : basePsynergyMap[element][0]
-  }
+  
   const availableSpells = ['Fireball', 'Healing Word', 'Lightning Bolt', 'Entangle']
+  const preparedSpells = Math.floor(level / 2) + 1
 
+  const dualClassMap = {
+    'Mercury|Venus': 'Guardian',
+    'Mars|Mercury': 'Luminier',
+    'Jupiter|Mercury': 'Oracle',
+    'Mars|Venus': 'Berserker',
+    'Jupiter|Venus': 'Conjurer',
+    'Jupiter|Mars': 'Illusionist'
+  }
+  const getDualClassName = (el1, el2) => {
+    const key = [el1, el2].sort().join('|')
+    return dualClassMap[key] || null
+  }
   useEffect(() => {
     function calculateAdeptClasses() {
       let classes = []
@@ -166,10 +176,6 @@ function App() {
 
     calculateAdeptClasses()
   }, [djinn, baseElement])
-
-  useEffect(() => {
-    setBasePsynergy(getBasePsynergy(baseElement, level))
-  }, [baseElement, level])
 
   return (
     <div className={`App ${isPortrait ? 'portrait' : 'landscape'}`}>
@@ -231,7 +237,7 @@ function App() {
                     }}
                   >
                     <option value="">None</option>
-                    {placeholderDjinn.map(dj => (
+                    {availableDjinn.map(dj => (
                       <option key={dj} value={dj}>{dj}</option>
                     ))}
                   </select>
@@ -242,7 +248,7 @@ function App() {
         </section>
         <section className="section">
           <h2>Psynergy</h2>
-          <p><strong>PP:</strong> {pp}</p>
+          <p><strong>Psynergy Points:</strong> {pp}</p>
           <p><strong>Spells You Can Prepare:</strong> {preparedSpells}</p>
 
           <h3>Base Psynergy</h3>
