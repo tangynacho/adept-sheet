@@ -267,7 +267,6 @@ function App() {
       
       <div className="layout">
         <section className="section combined-character-section">
-          
           <div className="two-column">
             <div className="character-info">
             <h2>Character</h2>
@@ -287,26 +286,6 @@ function App() {
                   +
                 </button>
               </h3>
-              {/* <h3>Level: {level}</h3> */}
-              {/* <input
-                type="number"
-                min="1"
-                max="20"
-                value={level}
-                onChange={(e) => {
-                  const val = e.target.value
-                  if (val === '') {
-                    setLevel('')
-                  } else {
-                    setLevel(parseInt(val))
-                  }
-                }}
-                onBlur={() => {
-                  if (level === '' || isNaN(level)) {
-                    setLevel(1)
-                  }
-                }}
-              /> */}
             </label>
               <label>
               <h3>Base Element:</h3>
