@@ -385,11 +385,11 @@ function App() {
 
           <h3>Prepared {adeptClass} Psynergy</h3>
 
-          <div style={{ display: 'flex', width: '100%' }}>
+          <div className="spell-tiers">
             {preparedSpells.map((count, tierIndex) => (
               <div
                 key={tierIndex}
-                style={{ flex: 1, padding: '0 0.5rem', boxSizing: 'border-box' }}
+                className="spell-tier-column"
               >
                 <h4 style={{ textAlign: 'center' }}>Tier {tierIndex + 1}</h4>
                 {count > 0 ? (

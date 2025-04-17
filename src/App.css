@@ -88,6 +88,17 @@ select {
   text-align: center; /* optional: centers text in each column */
 }
 
+.spell-tiers {
+  display: flex;
+  width: 100%;
+}
+
+.spell-tier-column {
+  flex: 1;
+  padding: 0 0.5rem;
+  box-sizing: border-box;
+}
+
 @media (max-width: 768px) {
   .App {
     padding: 1rem;
@@ -129,5 +140,14 @@ select {
   button {
     font-size: 1rem;
     padding: 0.5rem 1rem;
+  }
+
+  .spell-tiers {
+    flex-direction: column;
+  }
+
+  .spell-tier-column {
+    width: 100%;
+    padding: 0.5rem 0;
   }
 }
