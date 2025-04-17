@@ -206,6 +206,9 @@ function App() {
     return [1,0,0,0,0]
   }
   const preparedSpells = getPreparedSpellsByLevel(level)
+  const [chosenSpells, setChosenSpells] = useState(
+    preparedSpells.map(count => Array(count).fill("")) // [["", "", ""], [""], [], etc.]
+  )
 
   const dualClassMap = {
     'Mercury|Venus': 'Guardian',
@@ -260,6 +263,10 @@ function App() {
 
     calculateAdeptClasses()
   }, [djinn, baseElement])
+
+  useEffect(() => {
+    setChosenSpells(preparedSpells.map(count => Array(count).fill("")));
+  }, [adeptClass]);
 
   return (
     <div className={`App ${isPortrait ? 'portrait' : 'landscape'}`}>
@@ -357,7 +364,7 @@ function App() {
               onClick={() => setCurrentPP(prev => Math.max(0, prev - 1))}
               style={{ padding: '0.25rem 0.5rem' }}
             >
-              −
+              -
             </button>
             <button
               onClick={() => setCurrentPP(prev => Math.min(pp, prev + 1))}
@@ -381,20 +388,35 @@ function App() {
 
           <div className="spell-tiers">
             {preparedSpells.map((count, tierIndex) => (
-              <div
-                key={tierIndex}
-                className="spell-tier-column"
-              >
+              <div key={tierIndex} className="spell-tier-column">
                 <h4 style={{ textAlign: 'center' }}>Tier {tierIndex + 1}</h4>
                 {count > 0 ? (
-                  [...Array(count)].map((_, i) => (
-                    <select key={i} defaultValue="" style={{ width: '100%', marginBottom: '0.5rem' }}>
-                      <option value="" disabled>Select a spell</option>
-                      {adeptClassSpellList[adeptClass]?.[tierIndex]?.map((spell, j) => (
-                        <option key={j} value={spell}>{spell}</option>
-                      ))}
-                    </select>
-                  ))
+                  [...Array(count)].map((_, slotIndex) => {
+                    const selected = chosenSpells[tierIndex]?.[slotIndex] || "";
+                    const alreadyChosenInTier = chosenSpells[tierIndex].filter((_, i) => i !== slotIndex);
+                    const availableSpells = adeptClassSpellList[adeptClass]?.[tierIndex]?.filter(
+                      (spell) => !alreadyChosenInTier.includes(spell) || spell === selected
+                    ) || [];
+
+                    return (
+                      <select
+                        key={slotIndex}
+                        value={selected}
+                        onChange={(e) => {
+                          const newSpells = [...chosenSpells];
+                          newSpells[tierIndex] = [...newSpells[tierIndex]];
+                          newSpells[tierIndex][slotIndex] = e.target.value;
+                          setChosenSpells(newSpells);
+                        }}
+                        style={{ width: '100%', marginBottom: '0.5rem' }}
+                      >
+                        <option value="" disabled>Select a spell</option>
+                        {availableSpells.map((spell, i) => (
+                          <option key={i} value={spell}>{spell}</option>
+                        ))}
+                      </select>
+                    );
+                  })
                 ) : (
                   <div style={{ height: '2.5rem' }}></div>
                 )}
