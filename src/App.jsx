@@ -272,8 +272,23 @@ function App() {
             <div className="character-info">
             <h2>Character</h2>
             <label>
-              <h3>Level:</h3>
-              <input
+              <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                Level: {level}
+                <button
+                  onClick={() => setLevel(prev => Math.max(1, prev - 1))}
+                  style={{ padding: '0.25rem 0.5rem' }}
+                >
+                  −
+                </button>
+                <button
+                  onClick={() => setLevel(prev => Math.min(20, prev + 1))}
+                  style={{ padding: '0.25rem 0.5rem' }}
+                >
+                  +
+                </button>
+              </h3>
+              {/* <h3>Level: {level}</h3> */}
+              {/* <input
                 type="number"
                 min="1"
                 max="20"
@@ -291,7 +306,7 @@ function App() {
                     setLevel(1)
                   }
                 }}
-              />
+              /> */}
             </label>
               <label>
               <h3>Base Element:</h3>
