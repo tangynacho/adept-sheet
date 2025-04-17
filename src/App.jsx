@@ -3,6 +3,7 @@ import './App.css'
 
 function App() {
   const [level, setLevel] = useState(1)
+  const [currentPP, setCurrentPP] = useState(4)
   const [baseElement, setBaseElement] = useState('Mercury')
   const [djinn, setDjinn] = useState(['', '', '', ''])
   const [adeptClass, setAdeptClass] = useState('Paragon')
@@ -356,7 +357,21 @@ function App() {
         </section>
         <section className="section">
           <h2>Psynergy</h2>
-          <p><strong>Psynergy Points:</strong> {pp}</p>
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            Psynergy Points: {currentPP} / {pp}
+            <button
+              onClick={() => setCurrentPP(prev => Math.max(0, prev - 1))}
+              style={{ padding: '0.25rem 0.5rem' }}
+            >
+              −
+            </button>
+            <button
+              onClick={() => setCurrentPP(prev => Math.min(pp, prev + 1))}
+              style={{ padding: '0.25rem 0.5rem' }}
+            >
+              +
+            </button>
+          </h3>
           {/* <p><strong>Psynergy You Can Prepare:</strong> {preparedSpells.map((el, i) => (
             <span>{el} Tier {i+1}{i < preparedSpells.length - 1 ? ', ' : ''}</span>
           ))}</p> */}
