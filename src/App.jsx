@@ -291,7 +291,7 @@ function App() {
     }
 
     calculateAdeptClasses()
-  }, [djinn, baseElement])
+  }, [djinn, baseElement, djinnMode])
 
   useEffect(() => {
     setChosenSpells(preparedSpells.map(count => Array(count).fill("")));
