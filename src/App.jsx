@@ -492,7 +492,15 @@ function App() {
           <h3>Base Psynergy</h3>
           <ul style={{ listStyle: 'none', padding: 0, fontSize: '0.8rem' }}>
             {basePsynergy.map((spell, index) => (
-              <li key={spell} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <li
+                key={spell}
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-start', // <-- aligns top instead of center
+                  gap: '0.5rem',
+                  marginBottom: '0.5rem',
+                }}
+              >
                 {currentPP >= index && (
                   <button
                     style={{
@@ -500,6 +508,7 @@ function App() {
                       padding: '0.25rem 0.5rem',
                       marginTop: '0.25rem',
                       lineHeight: 1,
+                      whiteSpace: 'nowrap',
                     }}
                     onClick={() => {
                       setCurrentPP(prev => Math.max(0, prev - index));
@@ -508,10 +517,17 @@ function App() {
                     Cast
                   </button>
                 )}
-                <span style={{ color: elementColors[baseElement], whiteSpace: 'nowrap' }}>
-                  <strong>{spell} ({psynergyDetails[spell].cost}):</strong>
-                </span>
-                <span>{psynergyDetails[spell].description}</span>
+                <div>
+                  <span
+                    style={{
+                      color: elementColors[baseElement],
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    <strong>{spell} ({psynergyDetails[spell].cost}):</strong>
+                  </span>{' '}
+                  <span>{psynergyDetails[spell].description}</span>
+                </div>
               </li>
             ))}
           </ul>
