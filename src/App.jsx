@@ -20,6 +20,12 @@ function App() {
   }, [])
 
   const elements = ['Mercury', 'Venus', 'Mars', 'Jupiter']
+  const elementIcons = {
+    Mercury: 'public/icons/mercury.png',
+    Venus: 'public/icons/venus.png',
+    Mars: 'public/icons/mars.png',
+    Jupiter: 'public/icons/jupiter.png',
+  };
   const djinnDetails = {
     // Mercury
     'Chill': { element: 'Mercury', damage: 'Cold', skill: 'Medicine', bond: '???' },
@@ -320,12 +326,25 @@ function App() {
                 </select>
               </label>
               <h3>Devotions:</h3>
-              <ul>
-                {Object.entries(devotion).map(([element, count]) => (
-                  <li key={element}>{element}: {count}</li>
-                ))}
+              <ul style={{ listStyle: 'none', padding: 0 }}>
+                {Object.entries(devotion)
+                  .filter(([_, count]) => count > 0)
+                  .map(([element, count]) => (
+                    <li
+                      key={element}
+                      style={{
+                        backgroundImage: `url(${elementIcons[element]})`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundSize: '1rem 1rem',
+                        backgroundPosition: '0 50%',
+                        paddingLeft: '1.5rem', // leaves space for the icon
+                        lineHeight: '1.5rem',
+                      }}
+                    >
+                      {element}: {count}
+                    </li>
+                  ))}
               </ul>
-              
               <h3>
               Adept Class:
                 {adeptClasses.length > 1 ? (
