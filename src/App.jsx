@@ -394,6 +394,11 @@ function App() {
                           newDjinn[index] = e.target.value;
                           setDjinn(newDjinn);
                         }}
+                        style={{
+                          flex: '0 0 40%', // Makes it take up half width and prevents it from growing
+                          maxWidth: '40%', // Optional, ensures it doesn’t overflow
+                          minWidth: '120px', // Optional, to keep it readable on small screens
+                        }}
                       >
                         <option value="">None</option>
                         {availableOptions.map((dj) => (
