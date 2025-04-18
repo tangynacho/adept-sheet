@@ -49,6 +49,11 @@ function App() {
     newList[getDjinnIndex(d)] = currentMode === 'Set' ? 'Standby' : 'Set';
     setDjinnMode(newList)
   }
+  const summonWithDjinn = (d) => {
+    const newList = [...djinnMode];
+    newList[getDjinnIndex(d)] = 'Recovery';
+    setDjinnMode(newList)
+  }
 
   devotion[baseElement] += 1
   djinn.forEach(d => {
@@ -393,6 +398,20 @@ function App() {
                           >
                             {djinnMode[getDjinnIndex(value)] === 'Set' ? 'Unleash' : 'Set'}
                           </button>
+
+                          {djinnMode[getDjinnIndex(value)] === 'Standby' ? (<button
+                            style={{
+                              fontSize: '0.75rem',
+                              padding: '0.25rem 0.5rem',
+                              marginLeft: '0.5rem',
+                              lineHeight: 1,
+                            }}
+                            onClick={() =>
+                              summonWithDjinn(value)
+                            }
+                          >
+                            Summon
+                          </button>) : null}
                         </>
                       )}
                     </div>
