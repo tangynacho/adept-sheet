@@ -21,10 +21,10 @@ function App() {
 
   const elements = ['Mercury', 'Venus', 'Mars', 'Jupiter']
   const elementIcons = {
-    Mercury: 'public/icons/mercury.png',
-    Venus: 'public/icons/venus.png',
-    Mars: 'public/icons/mars.png',
-    Jupiter: 'public/icons/jupiter.png',
+    Mercury: '/icons/mercury.png',
+    Venus: '/icons/venus.png',
+    Mars: '/icons/mars.png',
+    Jupiter: '/icons/jupiter.png',
   };
   const elementColors = {
     Mercury: '#7fcfff', // Light Blue
