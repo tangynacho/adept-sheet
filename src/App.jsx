@@ -481,9 +481,9 @@ function App() {
           </h3>
 
           <h3>Base Psynergy</h3>
-          <ul>
+          <ul style={{ listStyle: 'none', padding: 0, fontSize: '0.8rem' }}>
             {basePsynergy.map(spell => (
-              <li key={spell}><strong>{spell} ({psynergyDetails[spell].cost}):</strong> {psynergyDetails[spell].description}</li>
+              <li key={spell}><strong style={{ color: elementColors[baseElement] }}>{spell} ({psynergyDetails[spell].cost}):</strong> {psynergyDetails[spell].description}</li>
             ))}
           </ul>
 
