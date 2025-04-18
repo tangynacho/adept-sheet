@@ -26,6 +26,12 @@ function App() {
     Mars: 'public/icons/mars.png',
     Jupiter: 'public/icons/jupiter.png',
   };
+  const elementColors = {
+    Mercury: '#7fcfff', // Light Blue
+    Venus: '#f4d35e',   // Golden Yellow
+    Mars: '#f76c5e',    // Red-Orange
+    Jupiter: '#c084fc', // Pinkish Purple
+  };
   const djinnDetails = {
     // Mercury
     'Chill': { element: 'Mercury', damage: 'Cold', skill: 'Medicine', bond: '???' },
@@ -438,11 +444,16 @@ function App() {
                     {value ? (
                       <div>
                         <p className="three-column-text">
-                          <span><strong>Element: </strong> {djinnDetails[value].element}</span>
+                          <span>
+                            <strong>Element: </strong>
+                            <span style={{ color: elementColors[djinnDetails[value].element] }}>
+                              {djinnDetails[value].element}
+                            </span>
+                          </span>
                           <span><strong>Damage Type: </strong> {djinnDetails[value].damage}</span>
                           <span><strong>Skill Bonus: </strong> {djinnDetails[value].skill}</span>
                         </p>
-                        <p><strong>Bond Skill: </strong> {djinnDetails[value].bond}</p>
+                        <p style={{ fontSize: '0.8rem' }}><strong>Bond Skill: </strong> {djinnDetails[value].bond}</p>
                       </div>
                     ) : null}
                   </div>

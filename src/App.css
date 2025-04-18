@@ -83,6 +83,7 @@ select {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  font-size: 0.8rem;
 }
 
 .three-column-text span {
