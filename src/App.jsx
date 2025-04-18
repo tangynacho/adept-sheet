@@ -509,7 +509,7 @@ function App() {
                   marginBottom: '0.5rem',
                 }}
               >
-                {currentPP >= index && (
+                {currentPP >= index && index > 0 && (
                   <button
                     style={{
                       fontSize: '0.75rem',
