@@ -31,6 +31,7 @@ function App() {
     'Gust': { element: 'Jupiter', damage: 'Force', skill: 'Deception', bond: '???' },
   }
   const availableDjinn = ['Chill', 'Flint', 'Forge', 'Gust']
+  const [djinnMode, setDjinnMode] = useState(['Set', 'Set', 'Set', 'Set'])
 
   const devotion = {
     Mercury: 0,
@@ -39,9 +40,19 @@ function App() {
     Jupiter: 0
   }
 
+  const getDjinnIndex = (d) => {
+    return availableDjinn.indexOf(d)
+  }
+  const toggleDjinnMode = (d) => {
+    const newList = [...djinnMode];
+    const currentMode = djinnMode[getDjinnIndex(d)]
+    newList[getDjinnIndex(d)] = currentMode === 'Set' ? 'Standby' : 'Set';
+    setDjinnMode(newList)
+  }
+
   devotion[baseElement] += 1
   djinn.forEach(d => {
-    if (d) {
+    if (d && djinnMode[getDjinnIndex(d)] === 'Set') {
       const element = djinnDetails[d].element
       devotion[element] += 1
     }
@@ -222,6 +233,7 @@ function App() {
     const key = [el1, el2].sort().join('|')
     return dualClassMap[key] || null
   }
+
   useEffect(() => {
     function calculateAdeptClasses() {
       let classes = []
@@ -326,33 +338,78 @@ function App() {
 
             <div className="djinn-selectors">
               <h2>Djinn</h2>
-              {djinn.map((value, index) => (
-                <div key={index}>
-                  <select
-                    value={value}
-                    onChange={(e) => {
-                      const newDjinn = [...djinn]
-                      newDjinn[index] = e.target.value
-                      setDjinn(newDjinn)
-                    }}
-                  >
-                    <option value="">None</option>
-                    {availableDjinn.map(dj => (
-                      <option key={dj} value={dj}>{dj}</option>
-                    ))}
-                  </select>
-                  {value ? (
-                    <div>
-                      <p className="three-column-text">
-                        <span><strong>Element: </strong> {djinnDetails[value].element}</span>
-                        <span><strong>Damage Type: </strong> {djinnDetails[value].damage}</span>
-                        <span><strong>Skill Bonus: </strong> {djinnDetails[value].skill}</span>
-                      </p>
-                      <p><strong>Bond Skill: </strong> {djinnDetails[value].bond}</p>
+              {djinn.map((value, index) => {
+                // Get list of other selected djinn to filter them out from options
+                const alreadySelected = djinn.filter((_, i) => i !== index);
+
+                // Filter available Djinn to exclude already selected ones (except the one in this slot)
+                const availableOptions = availableDjinn.filter(
+                  dj => !alreadySelected.includes(dj) || dj === value
+                );
+
+                return (
+                  <div key={index}>
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        marginBottom: '0.5rem',
+                        width: '100%',
+                      }}
+                    >
+                      <select
+                        value={value}
+                        onChange={(e) => {
+                          const newDjinn = [...djinn];
+                          newDjinn[index] = e.target.value;
+                          setDjinn(newDjinn);
+                        }}
+                      >
+                        <option value="">None</option>
+                        {availableOptions.map((dj) => (
+                          <option key={dj} value={dj}>
+                            {dj}
+                          </option>
+                        ))}
+                      </select>
+
+                      {value && (
+                        <>
+                          <span style={{ fontStyle: 'italic', marginLeft: '0.5rem' }}>
+                            {djinnMode[getDjinnIndex(value)]}
+                          </span>
+
+                          <div style={{ flexGrow: 1 }} /> {/* Spacer to push button right */}
+
+                          <button
+                            style={{
+                              fontSize: '0.75rem',
+                              padding: '0.25rem 0.5rem',
+                              lineHeight: 1,
+                            }}
+                            onClick={() =>
+                              toggleDjinnMode(value)
+                            }
+                          >
+                            {djinnMode[getDjinnIndex(value)] === 'Set' ? 'Unleash' : 'Set'}
+                          </button>
+                        </>
+                      )}
                     </div>
-                  ) : null}
-                </div>
-              ))}
+
+                    {value ? (
+                      <div>
+                        <p className="three-column-text">
+                          <span><strong>Element: </strong> {djinnDetails[value].element}</span>
+                          <span><strong>Damage Type: </strong> {djinnDetails[value].damage}</span>
+                          <span><strong>Skill Bonus: </strong> {djinnDetails[value].skill}</span>
+                        </p>
+                        <p><strong>Bond Skill: </strong> {djinnDetails[value].bond}</p>
+                      </div>
+                    ) : null}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -373,9 +430,6 @@ function App() {
               +
             </button>
           </h3>
-          {/* <p><strong>Psynergy You Can Prepare:</strong> {preparedSpells.map((el, i) => (
-            <span>{el} Tier {i+1}{i < preparedSpells.length - 1 ? ', ' : ''}</span>
-          ))}</p> */}
 
           <h3>Base Psynergy</h3>
           <ul>
