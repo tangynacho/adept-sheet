@@ -467,17 +467,26 @@ function App() {
           <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             Psynergy Points: {currentPP} / {pp}
             <button
-              onClick={() => setCurrentPP(prev => Math.max(0, prev - 1))}
-              style={{ padding: '0.25rem 0.5rem' }}
+              onClick={() => setCurrentPP(prev => Math.min(pp, prev + 2))}
+              style={{
+                fontSize: '0.75rem',
+                padding: '0.25rem 0.5rem',
+                lineHeight: 1,
+              }}
             >
-              -
+              Short Rest
             </button>
+            {currentPP < pp &&
             <button
-              onClick={() => setCurrentPP(prev => Math.min(pp, prev + 1))}
-              style={{ padding: '0.25rem 0.5rem' }}
+              onClick={() => setCurrentPP(pp)}
+              style={{
+                fontSize: '0.75rem',
+                padding: '0.25rem 0.5rem',
+                lineHeight: 1,
+              }}
             >
-              +
-            </button>
+              Reset
+            </button>}
           </h3>
 
           <h3>Base Psynergy</h3>
@@ -502,22 +511,41 @@ function App() {
                     ) || [];
 
                     return (
-                      <select
-                        key={slotIndex}
-                        value={selected}
-                        onChange={(e) => {
-                          const newSpells = [...chosenSpells];
-                          newSpells[tierIndex] = [...newSpells[tierIndex]];
-                          newSpells[tierIndex][slotIndex] = e.target.value;
-                          setChosenSpells(newSpells);
-                        }}
-                        style={{ width: '100%', marginBottom: '0.5rem' }}
-                      >
-                        <option value="" disabled>Select a spell</option>
-                        {availableSpells.map((spell, i) => (
-                          <option key={i} value={spell}>{spell}</option>
-                        ))}
-                      </select>
+                      <div key={slotIndex} style={{ marginBottom: '1rem' }}>
+                        <select
+                          value={selected}
+                          onChange={(e) => {
+                            const newSpells = [...chosenSpells];
+                            newSpells[tierIndex] = [...newSpells[tierIndex]];
+                            newSpells[tierIndex][slotIndex] = e.target.value;
+                            setChosenSpells(newSpells);
+                          }}
+                          style={{ width: '100%', marginBottom: '0.25rem' }}
+                        >
+                          <option value="" disabled>Select a spell</option>
+                          {availableSpells.map((spell, i) => (
+                            <option key={i} value={spell}>{spell}</option>
+                          ))}
+                        </select>
+                    
+                        {selected && currentPP >= tierIndex + 1 && (
+                          <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <button
+                              style={{
+                                fontSize: '0.75rem',
+                                padding: '0.25rem 0.5rem',
+                                marginTop: '0.25rem',
+                                lineHeight: 1,
+                              }}
+                              onClick={() => {
+                                setCurrentPP(currentPP - (tierIndex + 1))
+                              }}
+                            >
+                              Cast
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     );
                   })
                 ) : (
