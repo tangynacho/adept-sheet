@@ -10,6 +10,7 @@ function App() {
   const [adeptClasses, setAdeptClasses] = useState(['Paragon'])
   const [classTier, setClassTier] = useState(1)
   const [isPortrait, setIsPortrait] = useState(window.matchMedia("(orientation: portrait)").matches)
+  const [chosenClassSpells, setChosenClassSpells] = useState({ Paragon: [ [], [], [], [], [], ], Gallant: [ [], [], [], [], [], ], Warrior: [ [], [], [], [], [], ], Magister: [ [], [], [], [], [], ], Guardian: [ [], [], [], [], [], ], Luminier: [ [], [], [], [], [], ], Oracle: [ [], [], [], [], [], ], Berserker: [ [], [], [], [], [], ], Conjurer: [ [], [], [], [], [], ], Illusionist: [ [], [], [], [], [], ], });
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(orientation: portrait)")
@@ -221,6 +222,7 @@ function App() {
       ['True Polymorph', 'Time Stop'],
     ],
   };
+
   const getPreparedSpellsByLevel = (level) => {
     if (level >= 17) return [2,2,2,2,2]
     if (level >= 15) return [2,2,2,2,1]
@@ -288,6 +290,7 @@ function App() {
         setAdeptClass(classes[0])
       }
       setClassTier(tier)
+      setChosenSpells(chosenClassSpells[adeptClass])
     }
 
     calculateAdeptClasses()
@@ -545,7 +548,10 @@ function App() {
                 <h4 style={{ textAlign: 'center' }}>Tier {tierIndex + 1}</h4>
                 {count > 0 ? (
                   [...Array(count)].map((_, slotIndex) => {
-                    const selected = chosenSpells[tierIndex]?.[slotIndex] || "";
+                    let selected = chosenSpells[tierIndex]?.[slotIndex] || "";
+                    if (chosenClassSpells[adeptClass][tierIndex][slotIndex]) {
+                      selected = chosenClassSpells[adeptClass][tierIndex][slotIndex]
+                    }
                     const alreadyChosenInTier = chosenSpells[tierIndex].filter((_, i) => i !== slotIndex);
                     const availableSpells = adeptClassSpellList[adeptClass]?.[tierIndex]?.filter(
                       (spell) => !alreadyChosenInTier.includes(spell) || spell === selected
@@ -560,6 +566,9 @@ function App() {
                             newSpells[tierIndex] = [...newSpells[tierIndex]];
                             newSpells[tierIndex][slotIndex] = e.target.value;
                             setChosenSpells(newSpells);
+                            const newClassSpells = chosenClassSpells
+                            newClassSpells[adeptClass][tierIndex] = newSpells[tierIndex]
+                            setChosenClassSpells(newClassSpells)
                           }}
                           style={{ width: '100%', marginBottom: '0.25rem' }}
                         >
