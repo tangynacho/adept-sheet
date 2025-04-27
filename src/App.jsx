@@ -215,8 +215,8 @@ function App() {
       ['Power Word Kill', 'True Ressurection'],
     ],
     Illusionist: [
-      ['Charm Person', 'Color Spray', 'Faerie Fire', 'Magic Missile', 'Mind Sliver', 'Sleep'],
-      ['Blink', 'Counterspell', 'Crown of Madness', 'Phantom Steed', 'Slow'],
+      ['Charm Person', 'Faerie Fire', 'Magic Missile', 'Mind Sliver', 'Minor Illusion', 'Sleep'],
+      ["Arcanist's Magic Aura", 'Blink', 'Counterspell', 'Crown of Madness', 'Phantom Steed'],
       ['Dimension Door', 'Faithful Hound', 'Geas', 'Modify Memory', 'Polymorph'],
       ['Eyebite', 'Forcecage', 'Mass Suggestion'],
       ['True Polymorph', 'Time Stop'],
