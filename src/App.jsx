@@ -147,7 +147,7 @@ function App() {
     'Mind Link': { cost: 0, description: '???' },
     'Destruct Ray': { cost: 2, description: '???' },
     'Tempest': { cost: 1, description: '???' },
-    'Brain Storm': { cost: 2, description: '???' }
+    'Plasma Ray': { cost: 2, description: '???' }
   }
   
   const adeptClassSpellList = {
